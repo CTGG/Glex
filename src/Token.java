@@ -7,6 +7,7 @@ public class Token {
 		this.type = type;
 		this.name = name;
 	}
+	
 
 	public static String tokenToString(Token token){
 		return "<"+token.type.toString()+" , "+token.name+">";

@@ -1,6 +1,14 @@
 
 public enum TokenType {
-	KEYWORD,ID,OPERATOR,DELIMITER;
+	KEYWORD(1),ID(1),OPERATOR(2),DELIMITER(3);
+	private int typevalue;
+	private TokenType(int typevalue) {
+		this.typevalue = typevalue;
+	}
+	public int getTypeValue() {
+		return typevalue;
+	}
+	
 	public static String toString(TokenType type){
 		switch (type) {
 		case KEYWORD:
