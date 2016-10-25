@@ -10,7 +10,7 @@ public class LexicalAnalyzer {
 
 	
 	public char[] str2chars(String str){
-		char[] chars = null;
+		char[] chars = new char[100];
 		str.getChars(0, str.length(), chars, 0);
 		return chars;
 	}
@@ -21,40 +21,53 @@ public class LexicalAnalyzer {
 		int pointer = 0;
 		int charlen = chars.length;
 		do{
+			
 			//1.get the first char
 			char firstChar = chars[pointer];
 			//2.1check whether it starts with character
-
+			System.out.println("firstchar: "+firstChar);
+			System.out.println("pointer: "+pointer);
 			if((firstChar>='a'&&firstChar<='z')||(firstChar>='A'&&firstChar<='Z')) {
 				//2.2check whether it is reserved words
 				boolean isReserved = true;
+				int tempPointer = 0;
+				int reserveNumber = 0;
+				String reserveWord = "";
 				//2.2.1check each reserved word
 				for (int i=0;i<reservedWords.length;i++) {
 					String word = reservedWords[i];
 					isReserved = true;
-					int tempPointer = pointer;
+					tempPointer = pointer;
+					System.out.println("in this loop word is"+word+" and tempPointer is "+tempPointer);
 					//2.2.2check each char in words
 					if(tempPointer+word.length()<=(charlen-tempPointer)){
 						//check each char
 						for (char c : word.toCharArray()) {
-							if (c != chars[tempPointer]) {
+							if (c != chars[tempPointer]) {								
+								System.out.println("c is "+c+" and i is "+tempPointer+"chars[i] is "+chars[tempPointer]);
 								isReserved = false;
 								break;
 							}
 							tempPointer++;
-						}
-						if (isReserved) {
-							//add this reserved word into list							
-							Token token = new Token(TokenType.RESERVED, i+1, word);
-							outlist.add(token);
-							//to check next char
-							pointer = tempPointer;
-						}
+						}						
 					}else {
 						isReserved = false;
+						continue;
+					}
+					if(isReserved){
+						reserveNumber = i+1;
+						reserveWord += word;
 						break;
 					}
-					if (!isReserved) {
+				}
+					if (isReserved) {
+						System.out.println("====this is reserved====");
+						//add this reserved word into list							
+						Token token = new Token(TokenType.RESERVED, reserveNumber, reserveWord);
+						outlist.add(token);
+						//to check next char
+						pointer = tempPointer;
+					}else{
 						//this is ID, loop to check next char until it is neither char nor number
 						ArrayList<Character> tempchars =  new ArrayList<Character>();
 						char ch = firstChar;
@@ -63,11 +76,11 @@ public class LexicalAnalyzer {
 							pointer++;
 							ch = chars[pointer];
 						}
-						pointer--;
+//						pointer--;
 						//check if this ID already exists
 						boolean isExist = false;
 						for(Token t:outlist){
-							if (tempchars.toString().equals(t.getName())) {
+							if (String.valueOf(tempchars).equals(t.getName())) {
 								isExist = true;
 							}
 						}
@@ -76,10 +89,12 @@ public class LexicalAnalyzer {
 							IDcode++;
 						}
 						//add this ID into out list
-						Token token = new Token(TokenType.ID, IDcode, tempchars.toString());
+						Token token = new Token(TokenType.ID, IDcode, String.valueOf(tempchars));
 						outlist.add(token);
 					}
-				}
+					//TODO
+					System.out.println(isReserved);
+				
 				//2.3check number
 			}else if(firstChar>='0'&&firstChar<='9'){
 				ArrayList<Character> tempchars =  new ArrayList<Character>();
@@ -90,9 +105,9 @@ public class LexicalAnalyzer {
 					pointer++;
 					ch = chars[pointer];
 				}
-				pointer--;
+//				pointer--;
 				//add this ID into out list
-				Token token = new Token(TokenType.NUM, 56, tempchars.toString());
+				Token token = new Token(TokenType.NUM, 56, String.valueOf(tempchars));
 				outlist.add(token);
 				//2.4check operator and delimiter
 			}else{
@@ -151,6 +166,7 @@ public class LexicalAnalyzer {
 					}
 					break;
 				case '=':
+					System.out.println("===========");
 					if(chars[next] == '='){
 						Token token = new Token(TokenType.OPERATOR, 31, "==");
 						outlist.add(token);	
@@ -260,7 +276,9 @@ public class LexicalAnalyzer {
 					outlist.add(new Token(TokenType.DELIMITER, 55, "\""));	
 					pointer++;
 					break;
-					
+			    default:
+					pointer++;
+					break;
 				}
 			}
 		}while(pointer<chars.length);

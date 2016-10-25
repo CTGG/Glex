@@ -1,0 +1,33 @@
+<RESERVED , 20 , for>
+<DELIMITER , 45 , (>
+<RESERVED , 7 , int>
+<ID , 57 , [i]>
+<OPERATOR , 30 , =>
+<NUM , 56 , [0]>
+<DELIMITER , 53 , ;>
+<ID , 57 , [i]>
+<OPERATOR , 38 , <>
+<NUM , 56 , [1, 0]>
+<DELIMITER , 53 , ;>
+<ID , 57 , [i]>
+<OPERATOR , 23 , +=>
+<NUM , 56 , [2]>
+<DELIMITER , 46 , )>
+<DELIMITER , 49 , {>
+<ID , 58 , [s, u, m]>
+<OPERATOR , 30 , =>
+<ID , 58 , [s, u, m]>
+<OPERATOR , 22 , +>
+<NUM , 56 , [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]>
+<DELIMITER , 53 , ;>
+<RESERVED , 12 , if>
+<DELIMITER , 45 , (>
+<ID , 58 , [s, u, m]>
+<OPERATOR , 40 , >>
+<NUM , 56 , [1, 0, 0]>
+<DELIMITER , 46 , )>
+<ID , 59 , [x]>
+<OPERATOR , 30 , =>
+<NUM , 56 , [0]>
+<DELIMITER , 53 , ;>
+<DELIMITER , 50 , }>
