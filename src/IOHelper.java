@@ -6,6 +6,7 @@ public class IOHelper {
 		ArrayList<String> filestrs = new ArrayList<String>();
 		try {
 	        File file=new File(filePath);
+
 	        if(file.isFile() && file.exists()){
 	            InputStreamReader read = new InputStreamReader(new FileInputStream(file));
 	            BufferedReader bufferedReader = new BufferedReader(read);
@@ -40,5 +41,8 @@ public class IOHelper {
 			e.printStackTrace();
 		}
         
+	}
+	public static void main(String[] args) {
+		IOHelper.readFile("/input.txt");
 	}
 }
